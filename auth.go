@@ -19,6 +19,16 @@ var (
 	mu           sync.Mutex
 )
 
+func randomBase64String(l int) (string, error) {
+	buff := make([]byte, int(math.Ceil(float64(l)/float64(1.33333333333))))
+	_, err := rand.Read(buff)
+	if err != nil {
+		return "", err
+	}
+	str := base64.RawURLEncoding.EncodeToString(buff)
+	return str[:l], nil
+}
+
 func isSessionValid(sessionID string) bool {
 	return true
 	mu.Lock()
