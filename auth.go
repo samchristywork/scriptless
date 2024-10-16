@@ -36,3 +36,16 @@ func isSessionValid(sessionID string) bool {
 
 	return true
 }
+
+func checkSession(r *http.Request) bool {
+	cookie, err := r.Cookie("session_id")
+	if err != nil || cookie.Value == "" {
+		return false
+	}
+
+	if isSessionValid(cookie.Value) {
+		return true
+	}
+
+	return false
+}
