@@ -88,3 +88,60 @@ func createHandler(w http.ResponseWriter, r *http.Request) {
 
 	tmpl.Execute(w, nil)
 }
+
+func readHandler(w http.ResponseWriter, r *http.Request) {
+	if !checkSession(r) {
+		http.Redirect(w, r, "/login", http.StatusSeeOther)
+		return
+	}
+
+	pageName := r.URL.Query().Get("page")
+
+	if pageName == "" {
+		pageName = "users"
+	}
+
+	if pageName == "users" {
+		rows, err := db.Query("SELECT name, age FROM users;")
+		if err != nil {
+			http.Error(w, "Unable to fetch data", http.StatusInternalServerError)
+			return
+		}
+		defer rows.Close()
+
+		var data []struct {
+			Name string
+			Age  string
+		}
+
+		for rows.Next() {
+			var name, age string
+			if err := rows.Scan(&name, &age); err != nil {
+				http.Error(w, "Unable to read data", http.StatusInternalServerError)
+				return
+			}
+			data = append(data, struct{ Name, Age string }{name, age})
+		}
+
+		tmpl, err := template.ParseFiles("templates/base.html", "templates/read.html")
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
+
+		tmpl.Execute(w, struct {
+			Header string
+			Data   []struct {
+				Name string
+				Age  string
+			}
+		}{
+			Header: "Data List",
+			Data:   data,
+		})
+
+		return
+	}
+
+	pageNotFoundHandler(w)
+}
