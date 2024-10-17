@@ -58,3 +58,33 @@ func loginHandler(w http.ResponseWriter, r *http.Request) {
 
 	tmpl.Execute(w, nil)
 }
+
+func createHandler(w http.ResponseWriter, r *http.Request) {
+	if !checkSession(r) {
+		http.Redirect(w, r, "/login", http.StatusSeeOther)
+		return
+	}
+
+	if r.Method == http.MethodPost {
+		name := r.FormValue("name")
+		age := r.FormValue("age")
+
+		_, err := db.Exec("INSERT INTO users (name, age) VALUES (?, ?)", name, age)
+		if err != nil {
+			http.Error(w, "Unable to create entry", http.StatusInternalServerError)
+			return
+		}
+
+		http.Redirect(w, r, "/read", http.StatusSeeOther)
+		return
+	}
+
+
+	tmpl, err := template.ParseFiles("templates/base.html", "templates/create.html")
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	tmpl.Execute(w, nil)
+}
