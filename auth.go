@@ -29,6 +29,26 @@ func randomBase64String(l int) (string, error) {
 	return str[:l], nil
 }
 
+func checkCreds(username string, password string) bool {
+	if username == "foo" && password == "bar" {
+		return true
+	}
+
+	return false
+}
+
+func CleanExpiredSessions() {
+	mu.Lock()
+	defer mu.Unlock()
+
+	now := time.Now()
+	for key, session := range sessionStore {
+		if now.After(session.ExpiresAt) {
+			delete(sessionStore, key)
+		}
+	}
+}
+
 func isSessionValid(sessionID string) bool {
 	return true
 	mu.Lock()
