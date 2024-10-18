@@ -3,6 +3,7 @@ package main
 import (
 	"html/template"
 	"log"
+	"fmt"
 	"net/http"
 	"time"
 
@@ -59,6 +60,46 @@ func loginHandler(w http.ResponseWriter, r *http.Request) {
 	tmpl.Execute(w, nil)
 }
 
+func buildSidebar(selected string) template.HTML {
+	type Page struct {
+		name string
+		slug string
+	}
+	pages := []Page{
+		{
+			name: "Create",
+			slug: "create",
+		},
+		{
+			name: "Read",
+			slug: "read",
+		},
+		{
+			name: "Foo",
+			slug: "foo",
+		},
+		{
+			name: "Bar",
+			slug: "bar",
+		},
+	}
+
+	sidebar := template.HTML("")
+	for _, s:=range pages {
+		if s.name==selected {
+			sidebar+=template.HTML(fmt.Sprintf(`
+				<div style="color:green"><a href="/%s">%s</a></div>
+			`, s.slug, s.name))
+		} else {
+			sidebar+=template.HTML(fmt.Sprintf(`
+				<div style="color:red"><a href="/%s">%s</a></div>
+			`, s.slug, s.name))
+		}
+	}
+
+	return sidebar
+}
+
 func createHandler(w http.ResponseWriter, r *http.Request) {
 	if !checkSession(r) {
 		http.Redirect(w, r, "/login", http.StatusSeeOther)
@@ -86,7 +127,11 @@ func createHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	tmpl.Execute(w, nil)
+	tmpl.Execute(w, struct {
+		Sidebar template.HTML
+	}{
+		Sidebar: buildSidebar("Create"),
+	})
 }
 
 func readHandler(w http.ResponseWriter, r *http.Request) {
@@ -130,12 +175,14 @@ func readHandler(w http.ResponseWriter, r *http.Request) {
 		}
 
 		tmpl.Execute(w, struct {
+			Sidebar template.HTML
 			Header string
 			Data   []struct {
 				Name string
 				Age  string
 			}
 		}{
+			Sidebar: buildSidebar("Read"),
 			Header: "Data List",
 			Data:   data,
 		})
