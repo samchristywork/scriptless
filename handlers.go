@@ -190,5 +190,15 @@ func readHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	pageNotFoundHandler(w)
+	pageNotFoundHandler(w, r)
+}
+
+func pageNotFoundHandler(w http.ResponseWriter, r *http.Request) {
+	tmpl, err := template.ParseFiles("templates/404.html")
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	tmpl.Execute(w, nil)
 }
