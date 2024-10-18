@@ -3,10 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ template "title" . }}</title>
-		{{template "style" .}}
+    <title>{{template "title" .}}</title>
+    {{template "style" .}}
 </head>
-<body>
-	{{template "root" .}}
-</body>
+<html>
+  <header>Header</header>
+  {{.Sidebar}}
+  {{template "root" .}}
+  <footer>Footer</footer>
 </html>
