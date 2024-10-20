@@ -159,8 +159,16 @@ func readHandler(w http.ResponseWriter, r *http.Request) {
 		pageName = "users"
 	}
 
+	if sort == "" {
+		sort = "Name"
+	}
+
+	if sortDir == "" {
+		sortDir = "asc"
+	}
+
 	if pageName == "users" {
-		rows, err := db.Query("SELECT name, age FROM users;")
+		rows, err := db.Query("SELECT name, age FROM users ORDER BY "+sort+" "+sortDir+";")
 		if err != nil {
 			http.Error(w, "Unable to fetch data", http.StatusInternalServerError)
 			return
