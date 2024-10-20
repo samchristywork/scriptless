@@ -6,9 +6,20 @@ import (
 	"fmt"
 	"net/http"
 	"time"
+	"unicode"
 
 	_ "github.com/mattn/go-sqlite3"
 )
+
+func onlyLetters(input string) string {
+	var result []rune
+	for _, char := range input {
+		if unicode.IsLetter(char) {
+			result = append(result, char)
+		}
+	}
+	return string(result)
+}
 
 func loginHandler(w http.ResponseWriter, r *http.Request) {
 	if r.Method == http.MethodPost {
@@ -140,7 +151,9 @@ func readHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	pageName := r.URL.Query().Get("page")
+	pageName := onlyLetters(r.URL.Query().Get("page"))
+	sort := onlyLetters(r.URL.Query().Get("sort"))
+	sortDir := onlyLetters(r.URL.Query().Get("sortdir"))
 
 	if pageName == "" {
 		pageName = "users"

@@ -37,7 +37,7 @@ func checkCreds(username string, password string) bool {
 	return false
 }
 
-func CleanExpiredSessions() {
+func cleanExpiredSessions() {
 	mu.Lock()
 	defer mu.Unlock()
 
