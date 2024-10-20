@@ -14,8 +14,16 @@ Read
 <h1>{{ .Header }}</h1>
 <table>
     <tr>
-        <th>Name</th>
-        <th>Age</th>
+        <th>
+						Name
+						<a href="/read?sort=name&sortdir=asc">▲</a>
+						<a href="/read?sort=name&sortdir=desc">▼</a>
+				</th>
+        <th>
+						Age
+						<a href="/read?sort=age&sortdir=asc">▲</a>
+						<a href="/read?sort=age&sortdir=desc">▼</a>
+				</th>
     </tr>
     {{range .Data}}
     <tr>
