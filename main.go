@@ -27,6 +27,13 @@ func initDB() {
 func main() {
 	initDB()
 
+	go func() {
+		for {
+			time.Sleep(5 * time.Minute)
+			CleanExpiredSessions()
+		}
+	}()
+
 	http.HandleFunc("/login", loginHandler)
 
 	http.HandleFunc("/create", createHandler)
