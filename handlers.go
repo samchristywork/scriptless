@@ -1,9 +1,7 @@
 package main
 
 import (
-	"html/template"
 	"log"
-	"fmt"
 	"net/http"
 	"time"
 
@@ -51,53 +49,16 @@ func loginHandler(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	tmpl, err := template.ParseFiles("templates/login.html")
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
-	}
+	page(w, `<form method="post" action="/login">
+    <h1>Login</h1>
+    <label for="username">Username:</label>
+    <input type="text" id="username" name="username" required>
 
-	tmpl.Execute(w, nil)
-}
+    <label for="password">Password:</label>
+    <input type="password" id="password" name="password" required>
 
-func buildSidebar(selected string) template.HTML {
-	type Page struct {
-		name string
-		slug string
-	}
-	pages := []Page{
-		{
-			name: "Create",
-			slug: "create",
-		},
-		{
-			name: "Read",
-			slug: "read",
-		},
-		{
-			name: "Foo",
-			slug: "foo",
-		},
-		{
-			name: "Bar",
-			slug: "bar",
-		},
-	}
-
-	sidebar := template.HTML("")
-	for _, s:=range pages {
-		if s.name==selected {
-			sidebar+=template.HTML(fmt.Sprintf(`
-				<div style="color:green"><a href="/%s">%s</a></div>
-			`, s.slug, s.name))
-		} else {
-			sidebar+=template.HTML(fmt.Sprintf(`
-				<div style="color:red"><a href="/%s">%s</a></div>
-			`, s.slug, s.name))
-		}
-	}
-
-	return sidebar
+    <button type="submit">Login</button>
+  </form>`)
 }
 
 func createHandler(w http.ResponseWriter, r *http.Request) {
@@ -120,18 +81,7 @@ func createHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-
-	tmpl, err := template.ParseFiles("templates/base.html", "templates/create.html")
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
-	}
-
-	tmpl.Execute(w, struct {
-		Sidebar template.HTML
-	}{
-		Sidebar: buildSidebar("Create"),
-	})
+	foo(w)
 }
 
 func readHandler(w http.ResponseWriter, r *http.Request) {
@@ -164,10 +114,7 @@ func readHandler(w http.ResponseWriter, r *http.Request) {
 		}
 		defer rows.Close()
 
-		var data []struct {
-			Name string
-			Age  string
-		}
+		data := [][]string{}
 
 		for rows.Next() {
 			var name, age string
@@ -175,28 +122,10 @@ func readHandler(w http.ResponseWriter, r *http.Request) {
 				http.Error(w, "Unable to read data", http.StatusInternalServerError)
 				return
 			}
-			data = append(data, struct{ Name, Age string }{name, age})
+			data = append(data, []string{name, age})
 		}
 
-		tmpl, err := template.ParseFiles("templates/base.html", "templates/read.html")
-		if err != nil {
-			http.Error(w, err.Error(), http.StatusInternalServerError)
-			return
-		}
-
-		tmpl.Execute(w, struct {
-			Sidebar template.HTML
-			Header string
-			Data   []struct {
-				Name string
-				Age  string
-			}
-		}{
-			Sidebar: buildSidebar("Read"),
-			Header: "Data List",
-			Data:   data,
-		})
-
+		page(w, table([]string{"Name", "Age"}, data))
 		return
 	}
 
@@ -204,11 +133,5 @@ func readHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func pageNotFoundHandler(w http.ResponseWriter, r *http.Request) {
-	tmpl, err := template.ParseFiles("templates/404.html")
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
-	}
-
-	tmpl.Execute(w, nil)
+	page(w, `404`)
 }
