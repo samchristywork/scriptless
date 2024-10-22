@@ -50,7 +50,6 @@ func cleanExpiredSessions() {
 }
 
 func isSessionValid(sessionID string) bool {
-	return true
 	mu.Lock()
 	defer mu.Unlock()
 
