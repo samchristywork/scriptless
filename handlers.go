@@ -81,7 +81,17 @@ func createHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	foo(w)
+	page(w, `<form action="/create" method="POST">
+  <div>
+    <label for="name">Name:</label>
+    <input type="text" id="name" name="name" required>
+  </div>
+  <div>
+    <label for="age">Age:</label>
+    <input type="number" id="age" name="age" required min="0" max="120">
+  </div>
+  <button type="submit">Submit</button>
+</form>`)
 }
 
 func readHandler(w http.ResponseWriter, r *http.Request) {
