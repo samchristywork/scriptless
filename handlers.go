@@ -6,20 +6,9 @@ import (
 	"fmt"
 	"net/http"
 	"time"
-	"unicode"
 
 	_ "github.com/mattn/go-sqlite3"
 )
-
-func onlyLetters(input string) string {
-	var result []rune
-	for _, char := range input {
-		if unicode.IsLetter(char) {
-			result = append(result, char)
-		}
-	}
-	return string(result)
-}
 
 func loginHandler(w http.ResponseWriter, r *http.Request) {
 	if r.Method == http.MethodPost {
