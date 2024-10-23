@@ -81,3 +81,21 @@ func table(header []string, data [][]string) string {
 	`+content+`
 </table>`
 }
+
+func div(style string, body string) string {
+	return `<div style="`+style+`">`+body+`</div>`
+}
+
+func centeredBox(body string) string {
+	return div(`
+  padding: 1rem;
+  background-color: #eee;
+  border-radius: 0.25rem;
+  position: absolute;
+  top: 50vh;
+  left: 50vw;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+  text-align: center;
+  `, body)
+}
