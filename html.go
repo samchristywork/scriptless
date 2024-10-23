@@ -7,60 +7,60 @@ import (
 func page(w http.ResponseWriter, body string) {
 	w.Write([]byte(`<!DOCTYPE html>
 <head>
-  <meta charset="UTF-8">
-  <title>TODO</title>
-  <style>
+	<meta charset="UTF-8">
+	<title>TODO</title>
+	<style>
 * {
-  padding: 0;
-  margin: 0;
+	padding: 0;
+	margin: 0;
 }
 
 body {
-  font-family: sans;
+	font-family: sans;
 }
 
 button {
-  margin: 0.25rem;
-  padding: 12px 24px;
-  font-size: 16px;
-  color: #FFF;
-  background-color: #07F;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.2s ease;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  text-transform: uppercase;
-  width: 100%;
+	margin: 0.25rem;
+	padding: 12px 24px;
+	font-size: 16px;
+	color: #FFF;
+	background-color: #07F;
+	border: none;
+	border-radius: 4px;
+	cursor: pointer;
+	transition: background-color 0.3s ease, transform 0.2s ease;
+	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+	text-transform: uppercase;
+	width: 100%;
 }
 
 button:hover {
-  background-color: #05A;
+	background-color: #05A;
 }
 
 input[type="text"],
 input[type="password"] {
-  margin: 0.25rem;
-  font-size: 16px;
-  border: none;
-  border-radius: 0;
-  outline: none;
-  padding: 0.5rem;
+	margin: 0.25rem;
+	font-size: 16px;
+	border: none;
+	border-radius: 0;
+	outline: none;
+	padding: 0.5rem;
 }
-  </style>
+	</style>
 </head>
 <body>
-`+body+`
+` + body + `
 </body>
 </html>`))
 }
 
 func table(header []string, data [][]string) string {
 	content := ""
-	for i:=0;i<len(data);i++ {
+	for i := 0; i < len(data); i++ {
 		content += "<tr>"
-		for j:=0;j<len(data[i]);j++ {
-			content += "<td>"+data[i][j]+"</td>"
+		for j := 0; j < len(data[i]); j++ {
+			content += "<td>" + data[i][j] + "</td>"
 		}
 		content += "</tr>"
 	}
@@ -68,34 +68,34 @@ func table(header []string, data [][]string) string {
 <table>
 	<tr>
 		<th>
-			`+header[0]+`
+			` + header[0] + `
 			<a href="/read?sort=name&sortdir=asc">▲</a>
 			<a href="/read?sort=name&sortdir=desc">▼</a>
 		</th>
 		<th>
-			`+header[1]+`
+			` + header[1] + `
 			<a href="/read?sort=age&sortdir=asc">▲</a>
 			<a href="/read?sort=age&sortdir=desc">▼</a>
 		</th>
 	</tr>
-	`+content+`
+	` + content + `
 </table>`
 }
 
 func div(style string, body string) string {
-	return `<div style="`+style+`">`+body+`</div>`
+	return `<div style="` + style + `">` + body + `</div>`
 }
 
 func centeredBox(body string) string {
 	return div(`
-  padding: 1rem;
-  background-color: #eee;
-  border-radius: 0.25rem;
-  position: absolute;
-  top: 50vh;
-  left: 50vw;
-  transform: translate(-50%, -50%);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
-  text-align: center;
-  `, body)
+	padding: 1rem;
+	background-color: #eee;
+	border-radius: 0.25rem;
+	position: absolute;
+	top: 50vh;
+	left: 50vw;
+	transform: translate(-50%, -50%);
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+	text-align: center;
+	`, body)
 }

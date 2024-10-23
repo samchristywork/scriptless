@@ -51,12 +51,12 @@ func loginHandler(w http.ResponseWriter, r *http.Request) {
 
 	page(w, centeredBox(`<form method="post" action="/login">
 		<h1 style="padding: 0.25rem;">Login</h1>
-    <input type="text" id="username" name="username" placeholder="Username" required autofocus>
+		<input type="text" id="username" name="username" placeholder="Username" required autofocus>
 		<br>
-    <input type="password" id="password" name="password" placeholder="Password" required>
+		<input type="password" id="password" name="password" placeholder="Password" required>
 		<br>
-    <button type="submit">Login</button>
-  </form>`))
+		<button type="submit">Login</button>
+	</form>`))
 }
 
 func createHandler(w http.ResponseWriter, r *http.Request) {
@@ -80,15 +80,15 @@ func createHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	page(w, `<form action="/create" method="POST">
-  <div>
-    <label for="name">Name:</label>
-    <input type="text" id="name" name="name" required>
-  </div>
-  <div>
-    <label for="age">Age:</label>
-    <input type="number" id="age" name="age" required min="0" max="120">
-  </div>
-  <button type="submit">Submit</button>
+	<div>
+		<label for="name">Name:</label>
+		<input type="text" id="name" name="name" required>
+	</div>
+	<div>
+		<label for="age">Age:</label>
+		<input type="number" id="age" name="age" required min="0" max="120">
+	</div>
+	<button type="submit">Submit</button>
 </form>`)
 }
 
@@ -115,7 +115,7 @@ func readHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if pageName == "users" {
-		rows, err := db.Query("SELECT name, age FROM users ORDER BY "+sort+" "+sortDir+";")
+		rows, err := db.Query("SELECT name, age FROM users ORDER BY " + sort + " " + sortDir + ";")
 		if err != nil {
 			http.Error(w, "Unable to fetch data", http.StatusInternalServerError)
 			return
