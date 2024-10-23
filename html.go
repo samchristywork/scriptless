@@ -7,28 +7,47 @@ import (
 func page(w http.ResponseWriter, body string) {
 	w.Write([]byte(`<!DOCTYPE html>
 <head>
-	<meta charset="UTF-8">
-	<title>TODO</title>
-	<style>
+  <meta charset="UTF-8">
+  <title>TODO</title>
+  <style>
 * {
-	padding: 0;
-	margin: 0;
+  padding: 0;
+  margin: 0;
 }
 
 body {
-	font-family: sans;
+  font-family: sans;
+}
+
+button {
+  margin: 0.25rem;
+  padding: 12px 24px;
+  font-size: 16px;
+  color: #FFF;
+  background-color: #07F;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  text-transform: uppercase;
+  width: 100%;
+}
+
+button:hover {
+  background-color: #05A;
 }
 
 input[type="text"],
 input[type="password"] {
-	margin: 0.25rem;
+  margin: 0.25rem;
   font-size: 16px;
-	border: none;
-	border-radius: 0;
-	outline: none;
-	padding: 0.5rem;
+  border: none;
+  border-radius: 0;
+  outline: none;
+  padding: 0.5rem;
 }
-	</style>
+  </style>
 </head>
 <body>
 `+body+`
