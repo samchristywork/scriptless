@@ -9,6 +9,26 @@ func page(w http.ResponseWriter, body string) {
 <head>
 	<meta charset="UTF-8">
 	<title>TODO</title>
+	<style>
+* {
+	padding: 0;
+	margin: 0;
+}
+
+body {
+	font-family: sans;
+}
+
+input[type="text"],
+input[type="password"] {
+	margin: 0.25rem;
+  font-size: 16px;
+	border: none;
+	border-radius: 0;
+	outline: none;
+	padding: 0.5rem;
+}
+	</style>
 </head>
 <body>
 `+body+`
