@@ -49,16 +49,14 @@ func loginHandler(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	page(w, `<form method="post" action="/login">
-    <h1>Login</h1>
-    <label for="username">Username:</label>
-    <input type="text" id="username" name="username" required>
-
-    <label for="password">Password:</label>
-    <input type="password" id="password" name="password" required>
-
+	page(w, centeredBox(`<form method="post" action="/login">
+		<h1 style="padding: 0.25rem;">Login</h1>
+    <input type="text" id="username" name="username" placeholder="Username" required autofocus>
+		<br>
+    <input type="password" id="password" name="password" placeholder="Password" required>
+		<br>
     <button type="submit">Login</button>
-  </form>`)
+  </form>`))
 }
 
 func createHandler(w http.ResponseWriter, r *http.Request) {
