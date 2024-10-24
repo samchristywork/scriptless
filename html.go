@@ -2,6 +2,7 @@ package main
 
 import (
 	"net/http"
+	"fmt"
 )
 
 func page(w http.ResponseWriter, body string) {
@@ -95,6 +96,7 @@ func table(header []string, data [][]string) string {
 	maxSize := 3
 
 	rows := min(len(data), maxSize)
+	pages := float64(len(data))/float64(maxSize)
 
 	content := ""
 	for i := 0; i < rows; i++ {
@@ -103,6 +105,11 @@ func table(header []string, data [][]string) string {
 			content += "<td>" + data[i][j] + "</td>"
 		}
 		content += "</tr>"
+	}
+
+	links := ""
+	for i := 0; float64(i) < pages; i++ {
+		links += fmt.Sprintf(`<a href="/%d">%d</a>`, i, i+1)
 	}
 
 	return `
@@ -124,7 +131,7 @@ func table(header []string, data [][]string) string {
 		</th>
 	</tr>
 	` + content + `
-</table>`
+</table>` + links
 }
 
 func div(style string, body string) string {
