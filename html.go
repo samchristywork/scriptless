@@ -92,14 +92,19 @@ tr:hover {
 }
 
 func table(header []string, data [][]string) string {
+	maxSize := 3
+
+	rows := min(len(data), maxSize)
+
 	content := ""
-	for i := 0; i < len(data); i++ {
+	for i := 0; i < rows; i++ {
 		content += "<tr>"
 		for j := 0; j < len(data[i]); j++ {
 			content += "<td>" + data[i][j] + "</td>"
 		}
 		content += "</tr>"
 	}
+
 	return `
 <table>
 	<tr>
