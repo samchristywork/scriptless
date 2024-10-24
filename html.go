@@ -73,6 +73,16 @@ th {
 	color: #333;
 }
 
+th a {
+	color: grey;
+	text-decoration: none;
+	font-size: 0.5rem;
+	display: block;
+}
+
+tr:hover {
+	background-color: #f1f1f1;
+}
 	</style>
 </head>
 <body>
@@ -94,14 +104,18 @@ func table(header []string, data [][]string) string {
 <table>
 	<tr>
 		<th>
-			` + header[0] + `
-			<a href="/read?sort=name&sortdir=asc">▲</a>
-			<a href="/read?sort=name&sortdir=desc">▼</a>
+			<span>` + header[0] + `</span>
+			<span style="display: inline-block;">
+				<a href="/read?sort=name&sortdir=asc">▲</a>
+				<a href="/read?sort=name&sortdir=desc">▼</a>
+			</span>
 		</th>
 		<th>
-			` + header[1] + `
-			<a href="/read?sort=age&sortdir=asc">▲</a>
-			<a href="/read?sort=age&sortdir=desc">▼</a>
+			<span>` + header[1] + `</span>
+			<span style="display: inline-block;">
+				<a href="/read?sort=age&sortdir=asc">▲</a>
+				<a href="/read?sort=age&sortdir=desc">▼</a>
+			</span>
 		</th>
 	</tr>
 	` + content + `
