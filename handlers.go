@@ -55,7 +55,7 @@ func loginHandler(w http.ResponseWriter, r *http.Request) {
 		<br>
 		<input type="password" id="password" name="password" placeholder="Password" required>
 		<br>
-		<button type="submit">Login</button>
+		<button type="submit">Submit</button>
 	</form>`))
 }
 

@@ -47,6 +47,32 @@ input[type="password"] {
 	outline: none;
 	padding: 0.5rem;
 }
+
+table {
+	width: 100%;
+	border-collapse: collapse;
+	margin: 20px 0;
+	font-size: 16px;
+	font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+	box-shadow: 0 2px 3px rgba(0,0,0,0.1);
+}
+
+th, td {
+	padding: 12px 15px;
+	text-align: left;
+	border-bottom: 1px solid #dddddd;
+}
+
+tr:nth-child(even) {
+	background-color: #f9f9f9;
+}
+
+th {
+	background-color: #f1f1f1;
+	font-weight: bold;
+	color: #333;
+}
+
 	</style>
 </head>
 <body>
