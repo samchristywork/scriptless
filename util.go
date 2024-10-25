@@ -2,6 +2,7 @@ package main
 
 import (
 	"unicode"
+	"io/ioutil"
 )
 
 func onlyLetters(input string) string {
@@ -12,4 +13,13 @@ func onlyLetters(input string) string {
 		}
 	}
 	return string(result)
+}
+
+func loadAsset(file string) string {
+	data, err := ioutil.ReadFile(file)
+	if err != nil {
+		return ""
+	}
+
+	return string(data)
 }
