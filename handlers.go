@@ -133,7 +133,7 @@ func readHandler(w http.ResponseWriter, r *http.Request) {
 			data = append(data, []string{name, age})
 		}
 
-		page(w, table([]string{"Name", "Age"}, data))
+		page(w, table([]string{"Name", "Age"}, data, r.URL.String()))
 		return
 	}
 

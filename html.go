@@ -2,6 +2,7 @@ package main
 
 import (
 	"net/http"
+	"net/url"
 	"fmt"
 )
 
@@ -92,7 +93,19 @@ tr:hover {
 </html>`))
 }
 
-func table(header []string, data [][]string) string {
+func setPage(rawUrl string, n int) string {
+	u, err := url.Parse(rawUrl)
+	if err != nil {
+		panic(err)
+	}
+
+	q := u.Query()
+	q.Set("page", fmt.Sprintf("%d", n))
+	u.RawQuery = q.Encode()
+	return u.String()
+}
+
+func table(header []string, data [][]string, url string) string {
 	maxSize := 3
 
 	rows := min(len(data), maxSize)
@@ -109,7 +122,8 @@ func table(header []string, data [][]string) string {
 
 	links := ""
 	for i := 0; float64(i) < pages; i++ {
-		links += fmt.Sprintf(`<a href="/%d">%d</a>`, i, i+1)
+		links += fmt.Sprintf(`<a href="%s">%d</a>`,
+		setPage(url, i+1), i+1)
 	}
 
 	return `
