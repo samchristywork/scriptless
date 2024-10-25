@@ -71,3 +71,35 @@ th a {
 tr:hover {
 	background-color: #f1f1f1;
 }
+
+.tabs {
+  width: 100%;
+}
+
+input[type="radio"] {
+  display: none;
+}
+
+.tab-label {
+  display: inline-block;
+  padding: 10px 20px;
+  background: lightgray;
+  margin-right: 5px;
+  cursor: pointer;
+}
+
+.tab-content {
+  display: none;
+  padding: 20px;
+  border: 1px solid lightgray;
+  margin-top: -1px;
+}
+
+input[type="radio"]:checked ~ .tab-label {
+  background: #fff;
+  border-bottom: 1px solid #fff;
+}
+
+input[type="radio"]:checked + .tab-content {
+  display: block;
+}
