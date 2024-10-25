@@ -74,8 +74,32 @@ func table(header []string, data [][]string, url string) string {
 </table>` + links
 }
 
+
+func tabs(names []string, bodies []string) string {
+	tabs := ``
+
+	for i:=0;i<len(names);i++ {
+		tabs += fmt.Sprintf(`<label for="tab%d" class="tab-label">%s</label>`, i, names[i])
+	}
+
+	for i:=0;i<len(names);i++ {
+		if i==0 {
+			tabs += fmt.Sprintf(`<input type=radio id="tab%d" name="tab-control" checked>`, i)
+		} else {
+			tabs += fmt.Sprintf(`<input type=radio id="tab%d" name="tab-control">`, i)
+		}
+		tabs += divC(`tab-content`, bodies[i])
+	}
+
+	return divC(`tabs`, tabs)
+}
+
 func div(style string, body string) string {
 	return `<div style="` + style + `">` + body + `</div>`
+}
+
+func divC(classes string, body string) string {
+	return `<div class="` + classes + `">` + body + `</div>`
 }
 
 func centeredBox(body string) string {

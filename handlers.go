@@ -133,7 +133,11 @@ func readHandler(w http.ResponseWriter, r *http.Request) {
 			data = append(data, []string{name, age})
 		}
 
-		page(w, style, table([]string{"Name", "Age"}, data, r.URL.String()))
+		page(w, style, tabs([]string{"Table", "Tab2", "Tab3"}, []string{
+			table([]string{"Name", "Age"}, data, r.URL.String()),
+			div(``, `<h1>Tab2</h1>`),
+			div(``, `<h1>Tab3</h1>`),
+		}))
 		return
 	}
 
