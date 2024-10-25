@@ -10,6 +10,7 @@ import (
 )
 
 var db *sql.DB
+var style string
 
 func initDB() {
 	var err error
@@ -25,6 +26,8 @@ func initDB() {
 }
 
 func main() {
+	style = loadAsset("assets/style.css")
+
 	initDB()
 
 	go func() {

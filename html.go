@@ -6,7 +6,7 @@ import (
 	"fmt"
 )
 
-func page(w http.ResponseWriter, body string) {
+func page(w http.ResponseWriter, style string, body string) {
 	w.Write([]byte(`<!DOCTYPE html>
 <head>
 	<meta charset="UTF-8">

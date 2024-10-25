@@ -49,7 +49,7 @@ func loginHandler(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	page(w, centeredBox(`<form method="post" action="/login">
+	page(w, style, centeredBox(`<form method="post" action="/login">
 		<h1 style="padding: 0.25rem;">Login</h1>
 		<input type="text" id="username" name="username" placeholder="Username" required autofocus>
 		<br>
@@ -79,7 +79,7 @@ func createHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	page(w, `<form action="/create" method="POST">
+	page(w, style, `<form action="/create" method="POST">
 	<div>
 		<label for="name">Name:</label>
 		<input type="text" id="name" name="name" required>
@@ -133,7 +133,7 @@ func readHandler(w http.ResponseWriter, r *http.Request) {
 			data = append(data, []string{name, age})
 		}
 
-		page(w, table([]string{"Name", "Age"}, data, r.URL.String()))
+		page(w, style, table([]string{"Name", "Age"}, data, r.URL.String()))
 		return
 	}
 
@@ -141,5 +141,5 @@ func readHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func pageNotFoundHandler(w http.ResponseWriter, r *http.Request) {
-	page(w, `404`)
+	page(w, style, `404`)
 }
