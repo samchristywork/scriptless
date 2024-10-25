@@ -19,14 +19,14 @@ func page(w http.ResponseWriter, style string, body string) {
 </html>`))
 }
 
-func setPage(rawUrl string, n int) string {
+func setParam(rawUrl string, param string, value string) string {
 	u, err := url.Parse(rawUrl)
 	if err != nil {
 		panic(err)
 	}
 
 	q := u.Query()
-	q.Set("page", fmt.Sprintf("%d", n))
+	q.Set(param, value)
 	u.RawQuery = q.Encode()
 	return u.String()
 }
@@ -49,7 +49,7 @@ func table(header []string, data [][]string, url string) string {
 	links := ""
 	for i := 0; float64(i) < pages; i++ {
 		links += fmt.Sprintf(`<a href="%s">%d</a>`,
-		setPage(url, i+1), i+1)
+		setParam(url, "page", fmt.Sprintf("%d", i+1)), i+1)
 	}
 
 	return `
